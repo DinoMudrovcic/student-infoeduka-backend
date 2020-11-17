@@ -3,9 +3,11 @@ package com.dinomudrovcic.uniapp.domain.library;
 import com.dinomudrovcic.uniapp.domain.auth.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,9 +30,8 @@ public class Library {
     @Size(max = 50)
     private String author;
 
-    @NotBlank
-    @Size(max = 50)
-    private String amount;
+    @NotNull
+    private int amount;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable( name = "user_library",
