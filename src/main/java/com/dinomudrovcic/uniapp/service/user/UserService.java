@@ -1,5 +1,6 @@
 package com.dinomudrovcic.uniapp.service.user;
 
+import com.dinomudrovcic.uniapp.domain.auth.ERole;
 import com.dinomudrovcic.uniapp.domain.auth.Role;
 import com.dinomudrovcic.uniapp.domain.auth.User;
 import com.dinomudrovcic.uniapp.repository.UserRepository;
@@ -35,6 +36,15 @@ public class UserService {
     public Set<Role> getUserRoles(Long id) {
         User user = getById(id);
         return user != null ? user.getRoles() : null;
+    }
+
+    public List<User> getStudents() {
+        List<User> users = userRepository.getStudents();
+        return users;
+    }
+
+    public boolean isAdmin(String username) {
+        return userRepository.isAdmin(username) != null ? true : false;
     }
 
     public boolean save(User user) {

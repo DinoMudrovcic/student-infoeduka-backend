@@ -1,5 +1,6 @@
 package com.dinomudrovcic.uniapp.domain.auth;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +26,7 @@ public class User {
 
     @NotBlank
     @Size(max = 200)
+    @JsonIgnore
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)

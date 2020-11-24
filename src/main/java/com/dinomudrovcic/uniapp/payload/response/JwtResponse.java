@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -16,16 +17,16 @@ public class JwtResponse {
     private String token;
     @JsonIgnore
     private String type = "Bearer";
-    @JsonIgnore
     private String username;
     @JsonIgnore
     private List<String> roles;
+    private int expiresIn;
 
-    public JwtResponse(Long id, String token, String username, List<String> roles) {
-        this.id = id;
+    public JwtResponse(String token, String username, List<String> roles, int expirationDate) {
         this.token = token;
         this.username = username;
         this.roles = roles;
+        this.expiresIn = expirationDate;
     }
 
     public JwtResponse(String token) {

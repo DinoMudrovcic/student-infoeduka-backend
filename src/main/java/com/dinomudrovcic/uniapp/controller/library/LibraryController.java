@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@CrossOrigin(origins = "*", maxAge = 180000)
 @RestController
 @RequestMapping("/api/library")
 public class LibraryController {

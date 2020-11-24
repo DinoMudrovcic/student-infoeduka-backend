@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -53,8 +54,9 @@ public class AuthService {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
-        //return new JwtResponse(userDetails.getId(), jwt, userDetails.getUsername(), roles);
-        return new JwtResponse(jwt);
+        int expirationDate = jwtUtils.getExpirationFromJwtToken(jwt);
+        return new JwtResponse(jwt, userDetails.getUsername(), roles, expirationDate);
+        //return new JwtResponse(jwt);
     }
 
 

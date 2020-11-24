@@ -5,10 +5,12 @@ import com.dinomudrovcic.uniapp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -17,6 +19,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> getAllUsers() {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
@@ -33,6 +36,18 @@ public class UserController {
         return userService.exists(id) ?
                 new ResponseEntity<>(userService.getUserRoles(id), HttpStatus.OK) :
                 new ResponseEntity<>("User not exists", HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/role/{user}")
+    public ResponseEntity<?> isAdmin(@Valid @PathVariable String user) {
+        return userService.isAdmin(user) ?
+                new ResponseEntity<>("true", HttpStatus.OK) :
+                new ResponseEntity<>("false", HttpStatus.OK);
+    }
+
+    @GetMapping("/students")
+    public ResponseEntity<?> getStudents() {
+        return new ResponseEntity<>(userService.getStudents(), HttpStatus.OK);
     }
 
     @PostMapping("")

@@ -33,9 +33,4 @@ public class Library {
     @NotNull
     private int amount;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable( name = "user_library",
-            joinColumns = @JoinColumn(name = "library_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users = new HashSet<>();
-
 }

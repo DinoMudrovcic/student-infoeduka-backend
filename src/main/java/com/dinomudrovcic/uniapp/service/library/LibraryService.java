@@ -36,10 +36,9 @@ public class LibraryService {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
             return null;
+
         }
-        List<Library> libraries = libraryRepository.findAll().stream()
-                .filter(x -> x.getUsers().contains(user))
-                .collect(Collectors.toList());
+        List<Library> libraries = null;
         return libraries;
     }
 
