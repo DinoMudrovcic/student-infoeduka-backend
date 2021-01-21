@@ -26,7 +26,6 @@ public class User {
 
     @NotBlank
     @Size(max = 200)
-    @JsonIgnore
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -34,19 +33,19 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
-    @NotBlank
+    //@NotBlank
     @Size(max = 200)
     private String name;
 
-    @NotBlank
+    //@NotBlank
     @Size(max = 200)
     private String surname;
 
-    @NotBlank
+   // @NotBlank
     @Size(max = 200)
     private String email;
 
-    @NotBlank
+    //@NotBlank
     @Size(max = 200)
     private String phone;
 

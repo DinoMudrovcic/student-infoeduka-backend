@@ -13,5 +13,6 @@ INSERT INTO user_roles(user_id, role_id) VALUES ((SELECT id FROM users WHERE use
 INSERT INTO user_roles(user_id, role_id) VALUES ((SELECT id FROM users WHERE username = 'student'), (SELECT id FROM roles WHERE name = 'ROLE_STUDENT'));
 
 INSERT INTO library(amount, author, name) VALUES (1, 'author', 'name')
+INSERT INTO library(amount, author, name) VALUES (2, 'miro miric', 'knjigica')
 
-INSERT INTO user_library(borrow_date, library_id, user_id) VALUES ('2020-11-17', (SELECT id FROM library WHERE name = 'name'), (SELECT id from users WHERE username = 'user'))
+--INSERT INTO user_library(borrow_date, library_id, user_id) VALUES ('2020-11-17', (SELECT id FROM library WHERE name = 'name'), (SELECT id from users WHERE username = 'user'))

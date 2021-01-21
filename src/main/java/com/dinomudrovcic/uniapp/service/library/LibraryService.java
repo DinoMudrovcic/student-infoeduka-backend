@@ -25,7 +25,7 @@ public class LibraryService {
     private UserRepository userRepository;
 
     public List<Library> getAll() {
-        return libraryRepository.findAll();
+        return libraryRepository.findAllByOrderByIdAsc();
     }
 
     public Library getByName(String name) {
@@ -36,7 +36,6 @@ public class LibraryService {
         User user = userRepository.findById(userId).orElse(null);
         if (user == null) {
             return null;
-
         }
         List<Library> libraries = null;
         return libraries;
@@ -54,7 +53,11 @@ public class LibraryService {
 
     public boolean update(Library library) {
         try {
-            libraryRepository.saveAndFlush(library);
+            Library dbLibrary = libraryRepository.findById(library.getId()).orElseThrow(null);
+            dbLibrary.setAmount(library.getAmount());
+            dbLibrary.setAuthor(library.getAuthor());
+            dbLibrary.setName(library.getName());
+            libraryRepository.save(library);
             return true;
         } catch (Exception e) {
             logger.info("Error while updating user with id: " + library.getId());
@@ -78,6 +81,10 @@ public class LibraryService {
 
     public boolean exists(Long id) {
         return libraryRepository.existsById(id);
+    }
+
+    public String concatAuthorAndTitle(Library library) {
+        return String.format("%s : %s", library.getAuthor(), library.getName());
     }
 
 

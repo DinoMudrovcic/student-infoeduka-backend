@@ -1,10 +1,12 @@
 package com.dinomudrovcic.uniapp.controller.user;
 
+import com.dinomudrovcic.uniapp.domain.auth.ERole;
 import com.dinomudrovcic.uniapp.domain.auth.User;
 import com.dinomudrovcic.uniapp.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,20 +27,20 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<?> getByUsername(@Valid @PathVariable String username) {
+    public ResponseEntity getByUsername(@Valid @PathVariable String username) {
         return userService.exists(username) ?
-                new ResponseEntity<>(userService.getByUsername(username), HttpStatus.OK) :
-                new ResponseEntity<>("User not exists", HttpStatus.BAD_REQUEST);
+                new ResponseEntity(userService.getByUsername(username), HttpStatus.OK) :
+                new ResponseEntity("User not exists", HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getRole(@Valid @PathVariable Long id) {
+    @GetMapping("/roles/id/{id}")
+    public ResponseEntity getRole(@Valid @PathVariable Long id) {
         return userService.exists(id) ?
-                new ResponseEntity<>(userService.getUserRoles(id), HttpStatus.OK) :
-                new ResponseEntity<>("User not exists", HttpStatus.BAD_REQUEST);
+                new ResponseEntity(userService.getUserRoles(id), HttpStatus.OK) :
+                new ResponseEntity("User not exists", HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/role/{user}")
+    @GetMapping("/roles/{user}")
     public ResponseEntity<?> isAdmin(@Valid @PathVariable String user) {
         return userService.isAdmin(user) ?
                 new ResponseEntity<>("true", HttpStatus.OK) :
@@ -61,7 +63,7 @@ public class UserController {
 
     @PutMapping("")
     public ResponseEntity<?> update(@Valid @RequestBody User user) {
-        return userService.exists(user.getUsername()) ?
+        return userService.exists(user.getId()) ?
                 userService.update(user) ?
                         new ResponseEntity<>(HttpStatus.OK) :
                         new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR) :
