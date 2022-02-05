@@ -2,7 +2,7 @@ package com.dinomudrovcic.uniapp.controller.library;
 
 import com.dinomudrovcic.uniapp.domain.library.Library;
 import com.dinomudrovcic.uniapp.service.library.LibraryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +14,12 @@ import java.util.Locale;
 @CrossOrigin(origins = "*", maxAge = 180000)
 @RestController
 @RequestMapping("/api/library")
+@RequiredArgsConstructor
 public class LibraryController {
 
-    @Autowired
-    private LibraryService libraryService;
+    private final LibraryService libraryService;
 
-    @Autowired
-    private MessageSource messageSource;
+    private final MessageSource messageSource;
 
     @GetMapping
     public ResponseEntity<?> getAll() {

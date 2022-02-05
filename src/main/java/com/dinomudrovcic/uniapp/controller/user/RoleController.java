@@ -1,7 +1,7 @@
 package com.dinomudrovcic.uniapp.controller.user;
 
 import com.dinomudrovcic.uniapp.service.user.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/role")
+@RequiredArgsConstructor
 public class RoleController {
 
-    @Autowired
-    private RoleService roleService;
+    private final RoleService roleService;
 
     @GetMapping
     public ResponseEntity<?> getAll() {

@@ -1,24 +1,26 @@
 package com.dinomudrovcic.uniapp.service.user;
 
-import com.dinomudrovcic.uniapp.domain.auth.ERole;
 import com.dinomudrovcic.uniapp.domain.auth.Role;
 import com.dinomudrovcic.uniapp.domain.auth.User;
 import com.dinomudrovcic.uniapp.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
+@Transactional
 public class UserService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
 
     public List<User> getAllUsers() {
         return userRepository.findAll();

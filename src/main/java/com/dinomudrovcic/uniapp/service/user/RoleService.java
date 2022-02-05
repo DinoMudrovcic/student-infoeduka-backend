@@ -2,16 +2,16 @@ package com.dinomudrovcic.uniapp.service.user;
 
 import com.dinomudrovcic.uniapp.domain.auth.Role;
 import com.dinomudrovcic.uniapp.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class RoleService {
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     public List<Role> getAll() {
         return roleRepository.findAll();

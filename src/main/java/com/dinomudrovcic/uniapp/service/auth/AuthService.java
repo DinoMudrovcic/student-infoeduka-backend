@@ -11,7 +11,7 @@ import com.dinomudrovcic.uniapp.repository.RoleRepository;
 import com.dinomudrovcic.uniapp.repository.UserRepository;
 import com.dinomudrovcic.uniapp.security.jwt.JwtUtils;
 import com.dinomudrovcic.uniapp.security.service.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,22 +27,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
-    private AuthenticationManager authManager;
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
-    private JwtUtils jwtUtils;
-
-    @Autowired
-    public AuthService(AuthenticationManager authManager, UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
-        this.authManager = authManager;
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtils = jwtUtils;
-    }
+    private final AuthenticationManager authManager;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtUtils jwtUtils;
 
     public JwtResponse getJwtResponseFromLoginRequest(LoginRequest loginRequest) {
         Authentication auth = authManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
@@ -54,8 +46,12 @@ public class AuthService {
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
         int expirationDate = jwtUtils.getExpirationFromJwtToken(jwt);
-        return new JwtResponse(jwt, userDetails.getUsername(), roles, expirationDate);
-        //return new JwtResponse(jwt);
+        return JwtResponse.builder()
+                .token(jwt)
+                .username(userDetails.getUsername())
+                .roles(roles)
+                .expiresIn(expirationDate)
+                .build();
     }
 
 

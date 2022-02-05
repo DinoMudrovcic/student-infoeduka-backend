@@ -13,7 +13,7 @@ import java.sql.Date;
 public class UserLibrary {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @ManyToOne

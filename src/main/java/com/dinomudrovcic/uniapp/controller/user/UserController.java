@@ -1,12 +1,10 @@
 package com.dinomudrovcic.uniapp.controller.user;
 
-import com.dinomudrovcic.uniapp.domain.auth.ERole;
 import com.dinomudrovcic.uniapp.domain.auth.User;
 import com.dinomudrovcic.uniapp.service.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +13,10 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/user")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("")
     @PreAuthorize("hasRole('ROLE_ADMIN')")

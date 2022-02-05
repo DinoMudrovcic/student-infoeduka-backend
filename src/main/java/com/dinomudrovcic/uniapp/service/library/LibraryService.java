@@ -4,25 +4,22 @@ import com.dinomudrovcic.uniapp.domain.auth.User;
 import com.dinomudrovcic.uniapp.domain.library.Library;
 import com.dinomudrovcic.uniapp.repository.LibraryRepository;
 import com.dinomudrovcic.uniapp.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class LibraryService {
 
     private static final Logger logger = LoggerFactory.getLogger(LibraryService.class);
 
-    @Autowired
-    private LibraryRepository libraryRepository;
+    private final LibraryRepository libraryRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public List<Library> getAll() {
         return libraryRepository.findAllByOrderByIdAsc();
